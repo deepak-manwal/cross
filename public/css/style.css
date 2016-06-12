@@ -1,0 +1,40 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background: #eee !important;
+}
+.widget{
+	border:1px solid;
+}
+
+@import "bourbon";
+
+.wrapper {	
+	margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 40px 35px 45px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
+}
+
+.form-control-custom{
+  width: 100%;
+  height: 38px;
+  padding: 6px;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  outline: 0;
+}
+
+.m-30{
+	    margin-bottom: 30px;
+}
+.submit-btn{
+  outline:0 !important;
+}
