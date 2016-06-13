@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt : 'updated_at',
     classMethods: {
       associate: function(models) {
-        // User.hasMany(models.account, { foreignKey: 'user_id' }),
+        User.hasMany(models.invantory, { foreignKey: 'user_id' })
         // User.hasMany(models.private_circle, { foreignKey: 'user_id' }),
         // User.hasMany(models.group_circle_has_contact, { foreignKey: 'contact_user_id'}),
         // User.hasMany(models.event_calendar, { foreignKey: 'owner_id'}),
