@@ -3,18 +3,20 @@
 /**
  * Module dependencies.
  */
-
+var env = process.env.NODE_ENV || 'development';
+var config = require('../config.js')[env];
 var app = require('../app');
 var debug = require('debug')('cross:server');
 var http = require('http');
 var models = require("../src/models");
+var socket = require("../routes/socket");
 // var io      = require("socket.io");
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || config.defaultPort);
 app.set('port', port);
 
 /**
@@ -22,6 +24,13 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+
+
+/**
+ * Socket functionalities
+ */
+io.on('connection', socket);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -32,13 +41,14 @@ var server = http.createServer(app);
 // server.on('listening', onListening);
 
 /**
- * sequelize sync with mysql db
+ * Sequelize sync with mysql db
  */
 
 models.sequelize.sync().then(function () {
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
+    console.log("******Listening on "+config.defaultPort);
 });
 
 
