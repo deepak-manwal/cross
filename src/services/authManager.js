@@ -50,7 +50,7 @@ authManager.prototype.login = function(request, response, callback) {
     };
     
     try {
-        usersDaoObject.findUserOrCreate(request.query.username, callbackUser);//request.body.username
+        usersDaoObject.findUserOrCreate(request.body.username, callbackUser);//request.body.username
     } catch (e) {
         
     }

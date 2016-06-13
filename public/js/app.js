@@ -11,10 +11,11 @@ app.config(['$routeProvider', function($routeProvider) {
 
 app.controller('HomeCtrl', function($scope, $location, socket, $localStorage, $sessionStorage){
   var vm = this;
-  var username = 'testUser'+Math.random(); //random username
-  $localStorage.logged_in_username = username;
+  // // var username = 'testUser'+Math.random(); //random username
+  // // $localStorage.logged_in_username = username;
 
   alert($localStorage.logged_in_username);
+  var username = $localStorage.logged_in_username;
 
   socket.on('connect', function(data) {
       socket.emit('join', { username: username});
@@ -24,32 +25,34 @@ app.controller('HomeCtrl', function($scope, $location, socket, $localStorage, $s
   });
 
   $scope.$watch(function () { return $localStorage.logged_in_username; },function(newVal,oldVal){
-    // console.log("Old_val: "+oldVal+"   new_val: "+newVal);
     if(oldVal!==newVal){
        console.log("Redirecting :  Old_val: "+oldVal+"   new_val: "+newVal +" New user ********");
        $location.path( "/login" );
     }
-  })
+  });
 
 });
 
-app.controller('LoginCtrl', function(){
+app.controller('LoginCtrl', function($http, $location, $localStorage, $sessionStorage){
   var vm = this;
   // vm.test = "su";
-  // vm.play = function() {
-  //   if (vm.form.$valid) {
-  //     var  ajax = $http({
-  //         url: "/resendVerificationMail",
-  //         method: 'POST',
-  //         data : {email: userEmailAtSubmit}
-  //     });
-  //     return (ajax.then(function(response) {
-  //         return response.data[0];
-  //     },function(response){
-  //         return false;
-  //     }));
-  //   } 
-  // };
+  vm.play = function() {
+    alert(vm.username);
+    if (vm.form.$valid) {
+      var  ajax = $http({
+          url: "/login",
+          method: 'POST',
+          data : {username: vm.username}
+      });
+      return (ajax.then(function(response) {
+        // Setting username in local storage
+        $localStorage.logged_in_username = response.data.data.username; 
+        $location.path('/home');
+      },function(response){
+          // return false;
+      }));
+    } 
+  };
 });
 
 app.factory('socket', function ($rootScope) {
