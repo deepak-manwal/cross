@@ -47,4 +47,39 @@ invantoryDao.prototype.getUserInvantory = function (response, callback) {
     });
 };
 
+
+invantoryDao.prototype.reduceItemQuantity = function(bid) {
+    models.invantory.find({ where: {
+        user_id: bid.user.id, 
+        item_id: bid.invantory.item.id
+    } }).then(function(invantory) {
+        // console.log(i);
+        // console.log("End");
+      if (invantory) {
+      console.log(invantory.dataValues) 
+        invantory.updateAttributes({
+          quantity: invantory.quantity - bid.quantity
+        }).then(function() {
+            console.log("Invantory updated reduced for user +"+bid.user.id);
+        });
+      }
+    })
+}
+
+invantoryDao.prototype.increaseItemQuantity = function(bid, bidder_id) {
+    models.invantory.find({ where: {
+        user_id: bidder_id, 
+        item_id: bid.invantory.item.id
+    } }).then(function(invantory) {
+      if (invantory) { 
+        console.log(invantory.dataValues)
+        invantory.updateAttributes({
+          quantity: invantory.quantity + bid.quantity
+        }).then(function() {
+            console.log("Invantory updated added  for user +"+bidder_id);
+        });
+      }
+    })
+}
+
 module.exports = invantoryDao;

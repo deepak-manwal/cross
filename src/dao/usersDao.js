@@ -49,6 +49,38 @@ usersDao.prototype.getUserById = function (userId, response, callback) {
         });
 };
 
+usersDao.prototype.reduceCoin = function (bid, bidder_id) {
+    console.log(bid);
+
+    console.log("herer*********")
+    models.user.find({ where: {
+        id: bidder_id
+    } }).then(function(user) {
+      if (user) {
+        user.updateAttributes({
+          coins: user.coins - bid.final_amount
+        }).then(function() {
+            console.log("User conin reduced updated +"+bidder_id);
+        });
+      }
+    })
+};
+
+usersDao.prototype.increaseCoin = function (bid) {
+    console.log("herer*********")
+    models.user.find({ where: {
+        id: bid.user.id
+    } }).then(function(user) {
+      if (user) {
+        user.updateAttributes({
+          coins: user.coins + bid.final_amount
+        }).then(function() {
+            console.log("User conin added updated +"+bid.user.id);
+        });
+      }
+    })
+};
+
 // usersDao.prototype.create = function (user, callback) {
 //     models.user.find({ where: {email: user.email}}).then(function(res){
 //         if(res) {

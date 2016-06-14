@@ -86,4 +86,38 @@ userManager.prototype.start_auction = function(request, response, callback) {
     }
 };
 
+/**
+ * Complete bid
+ * Description: POST request for starting a auction
+ * @param {HTTP request} request
+ * @param {HTTP response} response
+ * @param {Callback function} callback
+ */
+userManager.prototype.complate_bid = function(bid, bidder_id) {
+    //1. Add coins
+    //2. remove invantory_quantity
+    //3. Remove coins 
+    //4. add invantory_quantity
+
+    var usersDaoObject = new usersDao();
+    // var itemsDaoObject = new itemsDao();
+    var invantoryDaoObject = new invantoryDao();
+    // var bidDaoObject = new bidDao();
+
+    console.log("Winner========    "+bidder_id);
+
+
+    try {
+        // usersDaoObject()
+        invantoryDaoObject.reduceItemQuantity(bid); //Seller
+        invantoryDaoObject.increaseItemQuantity(bid, bidder_id);
+        usersDaoObject.reduceCoin(bid, bidder_id);
+        usersDaoObject.increaseCoin(bid);
+    } catch (e) {
+        
+    }
+};
+
+
+
 module.exports = userManager;

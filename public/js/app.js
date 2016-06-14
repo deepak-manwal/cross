@@ -23,12 +23,6 @@ app.controller('HomeCtrl', function($scope, $location, $http, socket, $localStor
   vm.bid = null;
   vm.timer = 0;//in second
   // console.log(vm.invantories);
-  // toaster.success({title: "title", body:"text1"});
-  // toaster.error("title", "text2");
-  // toaster.pop({type: 'wait', title: "title", body:"text"});
-  // toaster.pop('success', "title", '<ul><li>Render html</li></ul>', 5000, 'trustedHtml');
-  // toaster.pop('error', "title", '<ul><li>Render html</li></ul>', null, 'trustedHtml');
-  // toaster.pop('wait', "title", null, null, 'template');
 
   vm.startAuctionConfirm = function(invantoryId, currentQuantiy) {
     // alert(id);
@@ -46,41 +40,7 @@ app.controller('HomeCtrl', function($scope, $location, $http, socket, $localStor
         toaster.error("Opss!!!!", "You don't have this much quantity for auction! Try again with lesser quantity.");
       } else {
         // Starting auction
-        alert("Sending socket");
-        socket.emit('setCurrentBid', { bid: {
-        "id": 1,
-        "quantity": 1,
-        "min_amount": 1,
-        "final_amount": 0,
-        "running": true,
-        "created_at": "2016-06-14T11:10:17.000Z",
-        "updated_at": "2016-06-14T11:10:17.000Z",
-        "user_id": 1,
-        "invantory_id": 2,
-        "invantory": {
-            "id": 2,
-            "quantity": 1,
-            "created_at": "2016-06-14T11:09:49.000Z",
-            "updated_at": "2016-06-14T11:09:49.000Z",
-            "user_id": 1,
-            "item_id": 2,
-            "item": {
-                "id": 2,
-                "name": "Thired",
-                "default_quantity": 1,
-                "created_at": "2016-06-14T11:09:48.000Z",
-                "updated_at": "2016-06-14T11:09:48.000Z"
-            }
-        },
-        "user": {
-            "id": 1,
-            "username": "test",
-            "coins": 1000,
-            "created_at": "2016-06-14T11:09:48.000Z",
-            "updated_at": "2016-06-14T11:09:48.000Z"
-        }
-    }});
-        // vm.startAuction(invantoryId, data);
+        vm.startAuction(invantoryId, data);
       }
     }, function () {
       // $log.info('Modal dismissed at: ' + new Date());
@@ -98,14 +58,30 @@ app.controller('HomeCtrl', function($scope, $location, $http, socket, $localStor
         // console.log(response);
         // vm.invantories = response.data.user.invantories;
         // vm.coins = response.data.user.coins;
-        vm.bid = response.bid;
-
-        console.log(response);
+        vm.bid = response.data.bid;
+        // console.log()
+        // console.log(response.bid);
+        // console.log(response);
+        socket.emit('setCurrentBid', response.data.bid);
 
       },function(response){
           // return false;
       });
   };
+
+  vm.placeBid = function(){
+    alert("placing bid");
+    if(vm.auctionForm.$valid) {
+      // alert("Emiting into socket");
+
+      // console.log(vm.bid);
+      // alert(vm.amount);
+      vm.bid.final_amount = vm.amount;
+      // console.log(vm.bid);
+      vm.amount = '';
+      socket.emit('updateBidding', {bid: vm.bid, user_id: vm.user_id});
+    }
+  }
 
   vm.init = function() {
     // Getting user info
@@ -121,22 +97,52 @@ app.controller('HomeCtrl', function($scope, $location, $http, socket, $localStor
           // return false;
           $location.path('/login');
       });
-  }();
+  };
+
+  vm.init();
 
   socket.on('connect', function(data) {
       socket.emit('join', { username: vm.username});
   });
-  socket.on('messages', function(data) {
-    // alert(data);
-  });
-  socket.on('changeTimer', function(timer){
-    console.log(timer);
-    vm.timer = timer;
+
+
+  // socket.on('messages', function(data) {
+  //   // alert(data);
+  // });
+
+
+  socket.on('changeTimer', function(data){
+    // console.log(data);
+    vm.timer = data.timer;
+    vm.bid = data.bid;
+    if(vm.bid === null){
+      toaster.pop({
+          type: 'success',
+          title: 'Bidding completed',
+          body: 'Success bidding ended. Invantory and coins will be updated soon of winner and seller',
+          showCloseButton: true
+      });
+      vm.init();
+    }
   });
 
-  socket.on('changeUserTimer', function(timer){
-    console.log(timer);
-    vm.timer = timer;
+  // socket.on('updateBidding', function(bid){
+  //   console.log()
+  // })
+
+  socket.on('changeUserTimer', function(data){
+    // console.log(data);
+    vm.timer = data.timer;
+    vm.bid = data.bid;
+    if(vm.bid === null){
+      toaster.pop({
+          type: 'success',
+          title: 'Bidding completed',
+          body: 'Success bidding ended. Invantory and coins will be updated soon of winner and seller',
+          showCloseButton: true
+      });
+      vm.init();
+    }
   });
 
   $scope.$watch(function () { return $localStorage.logged_in_username; },function(newVal,oldVal){

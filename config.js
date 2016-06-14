@@ -10,13 +10,13 @@ module.exports = {
         "hostName":"localhost",
         "defaultPort": "3000",
         "defaultInvantoryItems": [{
-            name: 'First',
-            default_quantity: 10
+            name: 'Birds',
+            default_quantity: 30
         }, {
-            name: 'Second',
-            default_quantity: 5
+            name: 'Carrots',
+            default_quantity: 18
         }, {
-            name: 'Thired',
+            name: 'Diamond',
             default_quantity: 1
         }],
         default_user_conins: 1000
@@ -32,13 +32,13 @@ module.exports = {
         "hostName":"localhost",
         "defaultPort": "8080",
         "defaultInvantoryItems": [{
-            name: 'First',
-            default_quantity: 10
+            name: 'Birds',
+            default_quantity: 30
         }, {
-            name: 'Second',
-            default_quantity: 5
+            name: 'Carrots',
+            default_quantity: 18
         }, {
-            name: 'Thired',
+            name: 'Diamond',
             default_quantity: 1
         }],
         default_user_conins: 1000

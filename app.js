@@ -12,7 +12,7 @@ var Sequelize = require('sequelize');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // Connection
-var sequelize = new Sequelize(config.database, config.username, config.password, { timezone: config.timezone });
+var sequelize = new Sequelize(config.database, config.username, config.password, { logging: console.log,timezone: config.timezone });
 
 
 var routes = require('./routes/routes');

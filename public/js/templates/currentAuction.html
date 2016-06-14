@@ -5,27 +5,31 @@
       Current Auction
       </h4> 
     </div> 
-    <form name="vm.auctionForm" class="" ng-submit="vm.ok()">
+    <form name="vm.auctionForm" class="" >
       <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"> 
         <div class="panel-body">
           <p ng-if="vm.bid==null">No current present</p> 
-          <div class="col-md-12">
-            <div class="col-md-6">
-              <span class="glyphicon glyphicon-file" style="font-size:70px;"></span>
-              </div>
+          <section ng-if="vm.bid">
+            <div class="col-md-12">
               <div class="col-md-6">
-              Quantity<br/><br/>{[{vm.bid.quantity}]}
-              </div>
-          </div> 
+                <span class="glyphicon glyphicon-file" style="font-size:70px;"></span>
+                </div>
+                <div class="col-md-6">
+                Quantity<br/><br/>{[{vm.bid.quantity}]}
+                </div>
+            </div> 
 
-          <p>Time Left: {[{vm.timer}]}</p> 
-          <p>Minimum Bid: {[{vm.bid.min_amount}]}</p>
-          <p>Winning Bid: {[{vm.bid.final_amount}]}</p>
-          <div class="form-group">
-            <label class="sr-only" for="exampleInputPassword3">Password</label>
-            <input type="number"  ng-model="vm.amount" class="form-control" placeholder="Min Bid amount(Ex. 500)" required>
-          </div>
-          <button class="btn btn-lg btn-default btn-block submit-btn" type="submit" ng-click="vm.placeBid()">Place Bid</button>   
+            <p>Time Left: {[{vm.timer}]} seconds</p> 
+            <p ng-if="vm.bid.final_amount==0">Minimum Bid: {[{vm.bid.min_amount}]} $</p>
+            <p ng-if="vm.bid.final_amount>0">Winning Bid: {[{vm.bid.final_amount}]} $</p>
+            <div class="form-group" ng-init="vm.finalMin = (vm.bid.final_amount > vm.bid.min_amount) ? vm.bid.final_amount : vm.bid.min_amount">
+              <input name="amount" type="number" min="{[{vm.bid.finalMin}]}" ng-model="vm.amount" class="form-control" placeholder="Min Bid amount(Ex. 500)" required> 
+              <div class="help-inline">
+                <span>Shoud be greater then Min/Current Bid ${[{vm.finalMin}]}.</span>
+              </div>
+            </div>
+            <button class="btn btn-lg btn-default btn-block submit-btn" type="submit" ng-disabled="vm.finalMin>vm.amount || vm.bid.user.id == vm.user_id" ng-click="vm.placeBid()">Place Bid</button> 
+          </section>  
       </div>
     </form>
 </div>
