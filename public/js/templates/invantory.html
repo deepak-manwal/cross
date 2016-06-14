@@ -7,16 +7,16 @@
     </div> 
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"> <div class="panel-body">
       <div class="list-group">
-        <a href="#" class="list-group-item" ng-repeat="i in vm.invantories">
+        <div class="list-group-item" ng-repeat="i in vm.invantories">
           <span class="glyphicon glyphicon-file"></span>
             <b>{[{i.item.name}]}</b>
             <span class="pull-right">
               Quqnaity: {[{i.quantity}]}
-              <button class="btn btn-xs btn-warning" alt="Auction" title="Auction">
+              <button class="btn btn-xs btn-warning" alt="Auction" title="Auction" ng-click="vm.startAuctionConfirm(i.id, i.quantity)">
                 <span class="glyphicon glyphicon-volume-up"></span>
               </button>
             </span>
-        </a>
+        </div>
       </div>
     </div> 
     </div> 

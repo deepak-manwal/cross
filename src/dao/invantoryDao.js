@@ -5,6 +5,21 @@ var invantoryDao = function () {
     self = this;
 };
 
+
+invantoryDao.prototype.get = function (user_id, invantory_id, response, callback) {
+  models.invantory.find({where:{
+    user_id: user_id,
+    id: invantory_id
+  }}).then(function(invantory){
+    if(invantory){
+      response.invantory = invantory;
+      callback(null, response);
+    } else{
+      callback("No invantory found of this author. Please try Again!", response);
+    }
+  });
+};
+
 invantoryDao.prototype.createInitialInvantory = function (items, response, callback) {
     var counter = 0;
     for(i=0; i<items.length; i++){

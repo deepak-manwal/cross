@@ -38,13 +38,13 @@ usersDao.prototype.getUserById = function (userId, response, callback) {
         }
     })
         .then(function (user) {
-            if(user != null) {
+            if(user !== null) {
                 /* user found*/
                 response.user = user;
                 callback(null, response);
             } else {
                 /*User not found*/
-                callback("No user found", null)
+                callback("No user found", response);
             }
         });
 };

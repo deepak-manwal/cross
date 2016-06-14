@@ -11,4 +11,6 @@ router.get('/', function(req, res, next) {
 router.post('/login', authController.login);
 router.get('/user/:id', userController.get);
 
+router.post('/user/start_auction/:user_id/:invantory_id', userController.start_auction);
+
 module.exports = router;

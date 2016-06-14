@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt : 'updated_at',
     classMethods: {
       associate: function(models) {
-        Item.hasMany(models.invantory, { foreignKey: 'item_id' })
+        Item.hasMany(models.invantory, { foreignKey: 'item_id' });
       }
     }
   });

@@ -21,6 +21,9 @@
     <link href="http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
+    <link href="/bower_comp/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -49,7 +52,9 @@
     </nav>
 
   	{{{body}}}
-
+ <toaster-container toaster-options="{'close-button':true, 'animation-class': 'toast-bottom-right'}">
+   
+ </toaster-container>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -60,12 +65,14 @@
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 
     <script src="/bower_comp/angular/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script> -->
     <script src="/bower_comp/angular-route/angular-route.js"></script>
     
     <script src="/bower_comp/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/bower_comp/AngularJS-Toaster/toaster.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.min.js"></script> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
