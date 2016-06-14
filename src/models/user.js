@@ -6,10 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    delete_flag: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-      defaultValue: false
+    coins: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     createdAt : 'created_at',

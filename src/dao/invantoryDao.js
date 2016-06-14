@@ -23,9 +23,10 @@ invantoryDao.prototype.createInitialInvantory = function (items, response, callb
     }
 };
 
-invantoryDao.prototype.getUserInvantory = function (user, callback) {
-    models.invantory.findAll({ where : { user_id: user.id }}).then(function(invantories) {
-        callback(null, invantories);
+invantoryDao.prototype.getUserInvantory = function (response, callback) {
+    models.invantory.findAll({ include: [models.user], where : { user_id: response.user.id }}).then(function(invantories) {
+        response.invantories = invantories;
+        callback(null, response);
     }).catch(function(error) {
         console.log(error);
     });

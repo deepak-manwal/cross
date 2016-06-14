@@ -18,7 +18,8 @@ module.exports = {
         }, {
             name: 'Thired',
             default_quantity: 1
-        }]
+        }],
+        default_user_conins: 1000
     },
     mac: {
         "username": "root",
@@ -39,7 +40,8 @@ module.exports = {
         }, {
             name: 'Thired',
             default_quantity: 1
-        }]
+        }],
+        default_user_conins: 1000
     },
 };
 

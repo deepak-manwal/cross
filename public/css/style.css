@@ -4,9 +4,6 @@ body {
   padding-bottom: 20px;
   background: #eee !important;
 }
-.widget{
-	border:1px solid;
-}
 
 @import "bourbon";
 
@@ -37,4 +34,7 @@ body {
 }
 .submit-btn{
   outline:0 !important;
+}
+.widget{
+         margin-top: 40px;
 }

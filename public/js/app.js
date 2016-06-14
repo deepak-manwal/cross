@@ -1,4 +1,4 @@
-var app = angular.module('BiddingApp', ['ngRoute', 'ngStorage']).config(function($interpolateProvider){
+var app = angular.module('BiddingApp', ['ngRoute', 'ngStorage', 'ui.bootstrap']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 });
 
@@ -9,16 +9,36 @@ app.config(['$routeProvider', function($routeProvider) {
 	    otherwise({redirectTo: '/login'});
 }]);
 
-app.controller('HomeCtrl', function($scope, $location, socket, $localStorage, $sessionStorage){
+app.controller('HomeCtrl', function($scope, $location, $http, socket, $localStorage, $sessionStorage){
   var vm = this;
   // // var username = 'testUser'+Math.random(); //random username
   // // $localStorage.logged_in_username = username;
 
-  alert($localStorage.logged_in_username);
-  var username = $localStorage.logged_in_username;
+  // alert($localStorage.logged_in_username);
+  vm.user_id = $localStorage.user_id;
+  alert(vm.user_id);
+  vm.username = $localStorage.logged_in_username;
+  vm.invantories = [];
+  vm.coins = 0;
+  // console.log(vm.invantories);
+
+  vm.init = function() {
+    // Getting user info
+    var  ajax = $http({
+          url: "/user/"+vm.user_id,
+          method: 'GET'
+      });
+      ajax.then(function(response) {
+        console.log(response);
+        vm.invantories = response.data.user.invantories;
+        vm.coins = response.data.user.coins;
+      },function(response){
+          // return false;
+      });
+  }();
 
   socket.on('connect', function(data) {
-      socket.emit('join', { username: username});
+      socket.emit('join', { username: vm.username});
   });
   socket.on('messages', function(data) {
     // alert(data);
@@ -33,6 +53,10 @@ app.controller('HomeCtrl', function($scope, $location, socket, $localStorage, $s
 
 });
 
+/**
+* Login controller
+*/
+
 app.controller('LoginCtrl', function($http, $location, $localStorage, $sessionStorage){
   var vm = this;
   // vm.test = "su";
@@ -46,7 +70,9 @@ app.controller('LoginCtrl', function($http, $location, $localStorage, $sessionSt
       });
       return (ajax.then(function(response) {
         // Setting username in local storage
-        $localStorage.logged_in_username = response.data.data.username; 
+        $localStorage.user_id = response.data.user.id;
+        $localStorage.logged_in_username = response.data.user.username; 
+        // $localStorage.invantories = response.data.invantories;
         $location.path('/home');
       },function(response){
           // return false;
@@ -79,16 +105,32 @@ app.factory('socket', function ($rootScope) {
   };
 });
 
-// app.directive('userCard', function () {
-//     return {
-//       restrict: 'E',
-//       templateUrl: 'js/template/	userCard.tmpl.html',
-//       scope: {
-//         name: '@',
-//         theme: '@'
-//       },
-//       controller: function ($scope) {
-//         $scope.theme = $scope.theme || 'default';
-//       }
-//     }
-//   });
+app.directive('playerState', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/playerState.html',
+    // controller: function ($scope) {
+    //   $scope.theme = $scope.theme || 'default';
+    // }
+  }
+});
+
+app.directive('invantory', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/invantory.html',
+    // controller: function ($scope) {
+    //   $scope.theme = $scope.theme || 'default';
+    // }
+  }
+});
+
+app.directive('currentAuction', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/currentAuction.html',
+    // controller: function ($scope) {
+    //   $scope.theme = $scope.theme || 'default';
+    // }
+  }
+});

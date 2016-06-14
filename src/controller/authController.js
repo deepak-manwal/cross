@@ -38,9 +38,9 @@ authController.prototype.login = function (request, response) {
             });
             return;
         }
-        console.log(response.user);
         response.json({
-            data: response.user,
+            user: response.user,
+            invantories: response.invantories,
             status: "success"
         });
     };

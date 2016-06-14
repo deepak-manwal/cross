@@ -36,6 +36,9 @@ authManager.prototype.login = function(request, response, callback) {
     var itemsDaoObject = new itemsDao();
     var invantoryDaoObject = new invantoryDao();
 
+    // var callbackInvantory = function(error, response){
+    //     invantoryDaoObject.getUserInvantory(response, callback);
+    // }
 
     var callbackCreateDefaultInvantory = function(error, items) {
         console.log("Enter in create default invantory");
@@ -58,6 +61,8 @@ authManager.prototype.login = function(request, response, callback) {
                 counter++;
                 itemsDaoObject.add(config.defaultInvantoryItems[i].name, config.defaultInvantoryItems[i].default_quantity, callbackTemp);
             }
+        } else { // Defaults items present in system DB
+            itemsDaoObject.getAll(callbackCreateDefaultInvantory);
         }
     };
     
@@ -83,7 +88,7 @@ authManager.prototype.login = function(request, response, callback) {
     };
     
     try {
-        usersDaoObject.findUserOrCreate(request.body.username, callbackUser);//request.body.username
+        usersDaoObject.findUserOrCreate(request.body.username, config.default_user_conins, callbackUser);//request.body.username
     } catch (e) {
         
     }

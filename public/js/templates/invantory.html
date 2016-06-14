@@ -1,0 +1,24 @@
+<div class="col-md-4">
+  <div class="panel panel-primary widget"> 
+    <div class="panel-heading" role="tab" id="headingOne"> 
+      <h4 class="panel-title"> 
+      Invantory
+      </h4> 
+    </div> 
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"> <div class="panel-body">
+      <div class="list-group">
+        <a href="#" class="list-group-item" ng-repeat="i in vm.invantories">
+          <span class="glyphicon glyphicon-file"></span>
+            <b>{[{i.item.name}]}</b>
+            <span class="pull-right">
+              Quqnaity: {[{i.quantity}]}
+              <button class="btn btn-xs btn-warning" alt="Auction" title="Auction">
+                <span class="glyphicon glyphicon-volume-up"></span>
+              </button>
+            </span>
+        </a>
+      </div>
+    </div> 
+    </div> 
+  </div>
+</div>
