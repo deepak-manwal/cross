@@ -7,8 +7,8 @@ var socket = function(client) {
     var userManagerObj = new userManager();
     // var self.bidding;
     self.bidder_id = null;
-    var timer = 30; // default value
-    var userTimer = 30;
+    var timer = 90; // default value
+    var userTimer = 90;
     var counter = 0;
     client.on('join', function(user) {
         console.log(user);
@@ -57,8 +57,8 @@ var socket = function(client) {
             setTimeout(counterStartNew, 1000);
         } else {
           //Ending bidding and updating ammount
-          timer = 30;
-          userTimer = 30;
+          timer = 90;
+          userTimer = 90;
           console.log("WHERERERERRRRRRRRRRR");
           console.log(self.bidder_id);
           if(self.bidder_id){

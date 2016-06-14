@@ -10,6 +10,7 @@
         <div class="panel-body">
           <p ng-if="vm.bid==null">No current present</p> 
           <section ng-if="vm.bid">
+            <p>Seller : {[{vm.bid.user.username}]}</p> 
             <div class="col-md-12">
               <div class="col-md-6">
                 <span class="glyphicon glyphicon-file" style="font-size:70px;"></span>
@@ -25,7 +26,7 @@
             <div class="form-group" ng-init="vm.finalMin = (vm.bid.final_amount > vm.bid.min_amount) ? vm.bid.final_amount : vm.bid.min_amount">
               <input name="amount" type="number" min="{[{vm.bid.finalMin}]}" ng-model="vm.amount" class="form-control" placeholder="Min Bid amount(Ex. 500)" required> 
               <div class="help-inline">
-                <span>Shoud be greater then Min/Current Bid ${[{vm.finalMin}]}.</span>
+                <span>Shoud be greater then Min/Current Bid.</span>
               </div>
             </div>
             <button class="btn btn-lg btn-default btn-block submit-btn" type="submit" ng-disabled="vm.finalMin>vm.amount || vm.bid.user.id == vm.user_id" ng-click="vm.placeBid()">Place Bid</button> 

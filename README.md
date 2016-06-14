@@ -75,17 +75,4 @@ None
 
 
 
-Design Description
-================
-
-List of technologies and design patterns used
-
-1. Nodejs
-2. Mysql
-3. Angular
-4. Socket.io
-5. Express
-6. Mocha
-7. Boostrap
-
 
