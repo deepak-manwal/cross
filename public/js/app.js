@@ -48,6 +48,11 @@ app.controller('HomeCtrl', function($scope, $location, $http, socket, $localStor
     });
   };
 
+  vm.logout = function(){
+    $localStorage.$reset();
+    $location.path('/login');
+  };
+
   vm.startAuction = function(invantoryId, data) {
      var  ajax = $http({
           url: "/user/start_auction/"+vm.user_id+"/"+invantoryId,
